@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="bn">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Bill Book</title>
+  <link rel="manifest" href="manifest.json">
+  <link rel="stylesheet" href="style.css">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+</head>
+<body>
+  <div class="container">
+    <header>
+      <div class="shop-header">
+        <h2 id="displayShopName">Sharma Stores</h2>
+        <p id="displayShopUPI">UPI: sharma@upi</p>
+      </div>
+      <button id="settingsBtn" class="btn-secondary">⚙️ Settings</button>
+    </header>
+
+    <!-- Shop Settings Modal -->
+    <div id="settingsModal" class="modal hidden">
+      <div class="modal-content">
+        <h3>Shop Settings</h3>
+        <label>Shop Name:</label>
+        <input type="text" id="shopNameInput" value="Sharma Stores">
+        <label>UPI ID (for QR code):</label>
+        <input type="text" id="shopUPIInput" value="sharma@upi">
+        <div class="modal-actions">
+          <button id="saveSettingsBtn" class="btn-primary">Save</button>
+          <button id="closeSettingsBtn" class="btn-secondary">Cancel</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Stats Dashboard -->
+    <section class="dashboard">
+      <div class="stat-card">
+        <span>Today's Sales</span>
+        <h3 id="todayTotal">₹0</h3>
+      </div>
+      <div class="stat-card">
+        <span>Total Bills</span>
+        <h3 id="billCount">0</h3>
+      </div>
+    </section>
+
+    <!-- Bill Maker Section -->
+    <section class="card">
+      <div class="card-header">
+        <h3>New Bill (<span id="currentBillId">#101</span>)</h3>
+      </div>
+      
+      <div class="add-item-form">
+        <input type="text" id="itemName" placeholder="Item name (e.g. Rice 2 kg)">
+        <input type="number" id="itemPrice" placeholder="Price (₹)">
+        <input type="number" id="itemQty" placeholder="Qty" value="1" min="1">
+        <button id="addItemBtn" class="btn-primary">+ Add</button>
+      </div>
+
+      <!-- Current Bill Preview Area (Exportable as Image) -->
+      <div id="billPreviewArea" class="bill-receipt">
+        <div class="receipt-header">
+          <h4 id="receiptShopTitle">Sharma Stores</h4>
+          <span id="receiptBillNo">#101</span>
+        </div>
+        <div class="receipt-date" id="receiptDate"></div>
+        <hr>
+        <table class="receipt-table">
+          <thead>
+            <tr>
+              <th>Item</th>
+              <th>Qty</th>
+              <th>Price</th>
+              <th>Total</th>
+            </tr>
+          </thead>
+          <tbody id="billItemsTable">
+            <!-- Dynamic items will be added here -->
+          </tbody>
+        </table>
+        <hr>
+        <div class="calc-row">
+          <span>Subtotal:</span>
+          <span>₹<span id="subTotalVal">0</span></span>
+        </div>
+        <div class="calc-row">
+          <span>Discount (₹):</span>
+          <input type="number" id="discountInput" value="0" min="0">
+        </div>
+        <div class="calc-row">
+          <span>Tax / GST (%):</span>
+          <input type="number" id="taxInput" value="0" min="0">
+        </div>
+        <div class="calc-row final-total">
+          <strong>Grand Total:</strong>
+          <strong>₹<span id="grandTotalVal">0</span></strong>
+        </div>
+
+        <div id="qrContainer" class="qr-box">
+          <div id="qrcode"></div>
+          <p class="qr-text">Scan & Pay via any UPI App</p>
+        </div>
+      </div>
+
+      <div class="action-buttons">
+        <button id="saveBillBtn" class="btn-primary">Save Bill</button>
+        <button id="shareWhatsappBtn" class="btn-success">Share on WhatsApp</button>
+        <button id="downloadImgBtn" class="btn-secondary">Download Bill Image</button>
+      </div>
+    </section>
+
+    <!-- History Section -->
+    <section class="card">
+      <h3>Recent Bills</h3>
+      <div id="billHistoryList" class="history-list">
+        <!-- History items will be listed here -->
+      </div>
+    </section>
+  </div>
+
+  <script src="app.js"></script>
+</body>
+</html>
